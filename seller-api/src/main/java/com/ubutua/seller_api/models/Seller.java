@@ -1,5 +1,10 @@
 package com.ubutua.seller_api.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "TB_SELLER")
 public class Seller {
 
         private Long id;

@@ -1,9 +1,12 @@
 package com.ubutua.seller_api.resources;
 
-import com.ubutua.seller_api.models.Seller;
+import com.ubutua.seller_api.dto.SellerRequest;
+import com.ubutua.seller_api.dto.SellerResponse;
 import com.ubutua.seller_api.services.SellerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -17,27 +20,28 @@ public class SellerController {
     @Autowired
     private  SellerService sellerService;
 
+
     @PostMapping
-    public ResponseEntity<Seller> save(@RequestBody Seller seller) {
-        seller = sellerService.save(seller);
+    public ResponseEntity<SellerResponse> save(@Validated @RequestBody SellerRequest sellerRequest) {
+        SellerResponse sellerResponse = sellerService.save(sellerRequest);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(seller.getId())
+                .buildAndExpand(sellerResponse.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).body(seller);
+        return ResponseEntity.created(location).body(sellerResponse);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Seller> getSeller(@PathVariable long id) {
-        Seller seller = sellerService.getById(id);
-        return ResponseEntity.ok(seller);
+    public ResponseEntity<SellerResponse> getSeller(@PathVariable long id) {
+        SellerResponse sellerResponse = sellerService.getById(id);
+        return ResponseEntity.ok(sellerResponse);
     }
 
     @GetMapping
-    public ResponseEntity<List<Seller>> getSellers() {
+    public ResponseEntity<List<SellerResponse>> getSellers() {
         return ResponseEntity.ok(sellerService.getAll());
     }
 
@@ -48,7 +52,7 @@ public class SellerController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> updateSeller(@PathVariable long id, @RequestBody Seller sellerUpdate) {
+    public ResponseEntity<Void> updateSeller(@PathVariable long id,@Valid @RequestBody SellerRequest sellerUpdate) {
         sellerService.update(id, sellerUpdate);
         return ResponseEntity.ok().build();
     }

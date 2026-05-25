@@ -33,27 +33,27 @@ public class SellerRequest {
         this.name = name;
     }
 
-    public Double getSalary() {
+    public double getSalary() {
         return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
 
-    public Double getBonus() {
+    public double getBonus() {
         return bonus;
     }
 
-    public void setBonus(Double bonus) {
+    public void setBonus(double bonus) {
         this.bonus = bonus;
     }
 
-    public Integer getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 

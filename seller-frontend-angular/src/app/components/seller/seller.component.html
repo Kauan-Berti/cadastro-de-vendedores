@@ -1,0 +1,54 @@
+<div class="mt-3">
+  <div class="display-6">
+    Formulário de Vendedores:
+  </div>
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+      <form #formSeller="ngForm">
+        <div class="row mb-3 mt-3">
+          <label for="inputName" class="col-sm-2 col-form-label">Nome:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="name" id="inputName" required [(ngModel)]="seller.name">
+          </div>
+        </div>
+        <div class="row mb-3 mt-3">
+          <label for="inputSalary" class="col-sm-2 col-form-label">Salário:</label>
+          <div class="col-sm-4">
+            <input type="number" class="form-control" name="salary" id="inputSalary" required
+              [(ngModel)]="seller.salary">
+          </div>
+          <label for="inputBonus" class="col-sm-2 col-form-label">Bônus:</label>
+          <div class="col-sm-4">
+            <input type="number" class="form-control" name="bonus" id="inputBonus" required [(ngModel)]="seller.bonus">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Gênero</label>
+
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="masculino" name="genero" value="M"[(ngModel)]="genderSelected"
+            required/>
+            <label class="form-check-label" for="masculino">
+              Masculino
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="feminino" name="genero" value="F" [(ngModel)]="genderSelected"
+            required/>
+            <label class="form-check-label" for="feminino">
+              Feminino
+            </label>
+          </div>
+        </div>
+        <div class="row mb-3 mt-3">
+          <div class="col-sm-4">
+            <button type="submit" class="btn btn-primary" (click)="save()"
+              [disabled]="formSeller.invalid">Cadastrar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

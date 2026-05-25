@@ -1,0 +1,38 @@
+<app-seller [seller]="seller" (saveEmitter)="saveSeller()"></app-seller>
+<div class="container mt-3">
+  <div class="display-6">
+    Vendedores Cadastrados:
+  </div>
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+      <table class="table" id="sellersTable">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Salário</th>
+            <th scope="col">Bônus</th>
+            <th scope="col" >Gênero</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let seller of sellers">
+            <td>{{seller.id}}</td>
+            <td>{{seller.name}}</td>
+            <td>{{seller.salary}}</td>
+            <td>{{seller.bonus}}</td>
+            <td>
+              {{convertGenderToString(seller.gender)}}
+            </td>
+
+            <td>
+              <button class="btn btn-success me-2" (click)="update(seller)">Editar</button>
+              <button class="btn btn-danger" (click)="remove(seller)">Excluir</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

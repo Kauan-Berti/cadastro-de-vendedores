@@ -9,13 +9,23 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SellerService {
 
+  private apiUrl = 'http://localhost:8080/sellers';
+
   constructor(private http: HttpClient) { }
 
   getSellers() : Observable<Seller[]>{
-    return this.http.get<Seller[]>('http://Localhost:8080/sellers');
+    return this.http.get<Seller[]>(this.apiUrl);
   }
 
-  postSeller(seller: Seller){
-    return this.http.post<Seller>('http://Localhost:8080/sellers', seller);
+  saveSeller(seller: Seller): Observable<Seller>{
+    return this.http.post<Seller>(this.apiUrl, seller);
+  }
+
+  deleteSeller(id: number){
+    return this.http.delete<Seller>(`${this.apiUrl}/${id}`);
+  }
+
+  updateSeller(id: number, seller: Seller){
+    return this.http.put<Seller>(`${this.apiUrl}/${id}`, seller);
   }
 }

@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class SellerComponent {
 
-
+   @Input()
    seller : Seller = {} as Seller;
 
    genderSelected: string = 'M';
@@ -23,9 +23,12 @@ export class SellerComponent {
 
   constructor() { };
 
+  @Output()
+  saveEmitter = new EventEmitter();
+
   save(){
     this.seller.gender = this.convert(this.genderSelected);
-    console.log(this.seller);
+    this.saveEmitter.emit(this.seller);
   }
 
 }

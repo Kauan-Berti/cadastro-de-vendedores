@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SellerComponent } from "../seller/seller.component";
 import { Seller } from '../../interfaces/Seller';
 import { CommonModule } from '@angular/common';
+import { SellerService } from '../../services/seller.service';
 
 @Component({
   selector: 'app-sellers',
@@ -13,50 +14,56 @@ export class SellersComponent {
 
 
   seller: Seller = {} as Seller
-  isUpdate: boolean = false;
-  idCounter: number = 3;
+  //isUpdate: boolean = false;
 
-  sellers: Seller[] = [
-    {
-      id: 1,
-      name: 'João Silva',
-      salary: 5000,
-      bonus: 1000,
-      gender: 0
-    },
-    {
-      id: 2,
-      name: 'Maria Souza',
-      salary: 6000,
-      bonus: 1500,
-      gender: 1
-    }
-  ];
+  sellers: Seller[] = [];
 
-  constructor() { }
+  constructor(private sellerService: SellerService) { }
 
 
-  saveSeller(){
-      if(!this.isUpdate){
-        this.seller.id = this.idCounter;
-        this.idCounter++;
-        this.sellers.push(this.seller);
-      }
+  ngOnInit(): void {
+    this.loadSellers();
+    this.saveSeller();
+  }
 
-      this.seller = {} as Seller;
-      this.isUpdate = false;
-    }
+  loadSellers() {
+    this.sellerService
+      .getSellers()
+      .subscribe({
+        next: (s => (this.sellers = s))
+      });
+  }
 
-    update(selectedSeller: Seller){
-      this.seller = selectedSeller;
-      this.isUpdate = true;
-    }
+  saveSeller() {
+    this.sellerService
+      .saveSeller(this.seller)
+      .subscribe({
+        next: s => {
+          this.sellers.push(s);
+          this.seller = {} as Seller;
+        }
+      })
+  }
 
-    remove(selectedSeller: Seller){
-      this.sellers = this.sellers.filter(s => s !== selectedSeller);
-    }
 
 
+ /**update(selectedSeller: Seller) {
+    this.seller = selectedSeller;
+    const id: number = selectedSeller.id;
+    //this.isUpdate = true;
+    this.sellerService.updateSeller(selectedSeller.id, this.seller)
+      .subscribe(() => {
+        this.loadSellers();
+      });
+
+  }**/
+
+
+  removeSeller(id: number) {
+    this.sellerService.deleteSeller(id).subscribe(() => {
+      this.sellers = this.sellers.filter(s => s.id !== id);
+    });
+  }
 
   convertGenderToString(gender: number): string {
     return gender === 0 ? 'M' : 'F';
@@ -65,5 +72,6 @@ export class SellersComponent {
   convertGenderToNumber(gender: string): number {
     return gender === 'M' ? 0 : 1;
   }
+
 
 }
